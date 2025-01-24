@@ -2266,7 +2266,7 @@ p {
 
 .hero-section.centered {
   text-align: center;
-  background-image: linear-gradient(#ff902e80, #2e9dff38), url("https://cdn.prod.website-files.com/67933c9eaaa36e3091fda168/67933e6191c320fb7fce36ee_Screenshot%20(289).png");
+  background-image: linear-gradient(#ff902e80, #2e9dff38), url("images/background.png");
   background-position: 0 0, 50%;
   background-size: auto, cover;
   border-bottom: 4px solid #69b9ff;

@@ -55,8 +55,7 @@
 </head>
 <body>
 
-    <h1>Squeaky Toy</h1>
-    <p>Server IP: <strong>play.squeakymc.com</strong></p>
+    <h1>Server Status</h1>
     <div id="status">Checking server status...</div>
 
     <script>
@@ -71,6 +70,10 @@
                 if (data.online) {
                     document.getElementById("status").innerHTML = 
                         `✅ Online | Players: ${data.players.online}/${data.players.max}`;
+					document.getElementById("version").innerHTML = 
+                        `Version: ${data.version || "Unknown"}`;
+					document.getElementByID("motd").innerHTML = 
+						`${data.motd.clean}`;
                 } else {
                     document.getElementById("status").innerHTML = "❌ Server is offline";
                 }

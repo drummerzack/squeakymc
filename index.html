@@ -42,6 +42,8 @@
 
 
 </html>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,35 +52,53 @@
     <title>Squeaky Toy Minecraft Server</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-        #status { font-size: 20px; margin-top: 20px; }
+        #status, #version, #motd { font-size: 20px; margin-top: 20px; }
     </style>
 </head>
 <body>
 
     <h1>Server Status</h1>
     <div id="status">Checking server status...</div>
+    <div id="version"></div>
+    <div id="motd"></div>
 
     <script>
         async function fetchServerStatus() {
             const serverIP = "play.squeakymc.com"; // Change this if needed
             const apiUrl = `https://api.mcsrvstat.us/bedrock/3/${serverIP}`;
 
+            console.log("Fetching server status from:", apiUrl);
+
             try {
                 const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
                 const data = await response.json();
-                
+                console.log("API Response:", data); // Log full API response
+
                 if (data.online) {
+				
+					document.getElementById("motd").innerHTML = 
+                        `${data.motd.clean || "No MOTD available"}`;
+						
                     document.getElementById("status").innerHTML = 
                         `✅ Online | Players: ${data.players.online}/${data.players.max}`;
-					document.getElementById("version").innerHTML = 
+                    
+                    document.getElementById("version").innerHTML = 
                         `Version: ${data.version || "Unknown"}`;
-					document.getElementByID("motd").innerHTML = 
-						`${data.motd.clean}`;
+
+                    
                 } else {
                     document.getElementById("status").innerHTML = "❌ Server is offline";
+                    document.getElementById("version").innerHTML = "";
+                    document.getElementById("motd").innerHTML = "";
                 }
             } catch (error) {
                 document.getElementById("status").innerHTML = "⚠️ Error fetching server status";
+                document.getElementById("version").innerHTML = "";
+                document.getElementById("motd").innerHTML = "";
                 console.error("Error fetching server status:", error);
             }
         }

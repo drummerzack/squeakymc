@@ -42,3 +42,47 @@
 
 
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squeaky Toy Minecraft Server</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        #status { font-size: 20px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <h1>Squeaky Toy</h1>
+    <p>Server IP: <strong>play.squeakymc.com</strong></p>
+    <div id="status">Checking server status...</div>
+
+    <script>
+        async function fetchServerStatus() {
+            const serverIP = "play.squeakymc.com"; // Change this if needed
+            const apiUrl = `https://api.mcsrvstat.us/bedrock/3/${serverIP}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                if (data.online) {
+                    document.getElementById("status").innerHTML = 
+                        `✅ Online | Players: ${data.players.online}/${data.players.max}`;
+                } else {
+                    document.getElementById("status").innerHTML = "❌ Server is offline";
+                }
+            } catch (error) {
+                document.getElementById("status").innerHTML = "⚠️ Error fetching server status";
+                console.error("Error fetching server status:", error);
+            }
+        }
+
+        fetchServerStatus();
+        setInterval(fetchServerStatus, 30000); // Refresh every 30 seconds
+    </script>
+
+</body>
+</html>
